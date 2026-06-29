@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garden Variety Farm — Oldham County, Kentucky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --soil:      #1A0F07;
+      --plum:      #4A1F60;
+      --fern:      #3B5934;
+      --harvest:   #BF7820;
+      --parchment: #EDE6D8;
+      --tomato:    #C13B28;
+      --cream:     #FAF7F2;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Lora', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--soil);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 2rem;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(26,15,7,0.88);
+      backdrop-filter: blur(14px);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 101;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--cream);
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--soil);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        z-index: 99;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 1.5rem; opacity: 1; }
+    }
+
+    /* ── BUTTONS ─────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-tomato  { background: var(--tomato);  color: var(--cream); }
+    .btn-tomato:hover  { background: #d0432f; }
+    .btn-outline { background: transparent; color: var(--cream); border: 1.5px solid rgba(250,247,242,0.35); }
+    .btn-outline:hover { border-color: var(--cream); }
+    .btn-dark    { background: var(--soil);    color: var(--cream); }
+    .btn-dark:hover    { background: var(--plum); }
+    .btn-harvest { background: var(--harvest); color: var(--soil);  font-weight: 800; }
+    .btn-harvest:hover { background: #cf8a25; }
+
+    /* ── LAYOUT HELPERS ──────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      opacity: 0.55;
+      margin-bottom: 1rem;
+    }
+
+    /* ── WAVE DIVIDERS ───────────────────────────── */
+    .wave {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      margin-bottom: -1px;
+    }
+    .wave svg { display: block; width: 100%; }
+
+    /* ── SCROLL REVEAL ───────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes breathe {
+      0%   { transform: scale(1);    opacity: 0.5; }
+      100% { transform: scale(1.06); opacity: 0.72; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.35; transform: scaleY(1); }
+      50%       { opacity: 1;    transform: scaleY(1.12); }
+    }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 9rem 2rem 5rem;
+      position: relative;
+      background: var(--soil);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 25% 65%, rgba(74,31,96,0.7)  0%, transparent 55%),
+        radial-gradient(ellipse at 82% 18%, rgba(59,89,52,0.5)  0%, transparent 48%),
+        radial-gradient(ellipse at 60% 85%, rgba(193,59,40,0.2) 0%, transparent 40%);
+      animation: breathe 14s ease-in-out infinite alternate;
+    }
+    /* CSS noise grain */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-size: clamp(0.7rem, 1.4vw, 0.88rem);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--harvest);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(4.5rem, 14vw, 12rem);
+      line-height: 0.86;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: var(--cream);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.85s ease forwards 0.5s;
+    }
+    .hero-title .tomato-word { color: var(--tomato); }
+    .hero-body {
+      font-size: clamp(1rem, 2vw, 1.22rem);
+      line-height: 1.75;
+      max-width: 460px;
+      color: rgba(250,247,242,0.78);
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.85s ease forwards 0.72s;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.85s ease forwards 0.9s;
+    }
+    .scroll-cue {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.3s;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 56px;
+      background: linear-gradient(to bottom, transparent, rgba(250,247,242,0.35));
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+    .scroll-cue span {
+      font-family: var(--font-display);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    /* ── INTRO BRIDGE ─────────────────────────────── */
+    .intro {
+      background: var(--soil);
+      padding: 5rem 2rem 0;
+    }
+    .intro-inner {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .intro-text {
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      line-height: 1.65;
+      font-style: italic;
+      color: rgba(250,247,242,0.88);
+    }
+    .intro-text strong {
+      font-style: normal;
+      color: var(--harvest);
+    }
+
+    /* ── WHAT WE GROW ─────────────────────────────── */
+    .grow {
+      background: var(--fern);
+      padding: 5rem 2rem 7rem;
+    }
+    .grow-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .grow-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(3rem, 9vw, 7rem);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--parchment);
+    }
+    .grow-sub {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(237,230,216,0.75);
+      max-width: 340px;
+    }
+
+    /* Produce grid */
+    .produce-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 0.85rem;
+    }
+    .produce-item {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(237,230,216,0.14);
+      border-radius: 6px;
+      padding: 1.2rem 1.4rem;
+      position: relative;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .produce-item:hover {
+      background: rgba(255,255,255,0.13);
+      transform: translateY(-3px);
+    }
+    .produce-item.featured {
+      grid-column: span 2;
+      background: rgba(193,59,40,0.12);
+      border-color: rgba(193,59,40,0.28);
+    }
+    .produce-item.new-item {
+      background: rgba(74,31,96,0.28);
+      border-color: rgba(191,120,32,0.45);
+    }
+    .produce-badge {
+      position: absolute;
+      top: 0.55rem; right: 0.55rem;
+      font-family: var(--font-display);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--harvest);
+      color: var(--soil);
+      padding: 0.18rem 0.45rem;
+      border-radius: 2px;
+    }
+    .produce-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      margin-bottom: 0.25rem;
+    }
+    .produce-note {
+      font-size: 0.78rem;
+      color: rgba(237,230,216,0.58);
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 560px) {
+      .produce-item.featured { grid-column: span 1; }
+    }
+
+    /* ── MUSHROOM SPOTLIGHT ───────────────────────── */
+    .mushroom {
+      background: var(--plum);
+      padding: 7rem 2rem;
+      text-align: center;
+    }
+    .mushroom-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--harvest);
+      margin-bottom: 1.5rem;
+    }
+    .mushroom-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(3.2rem, 10vw, 9rem);
+      text-transform: uppercase;
+      line-height: 0.86;
+      color: var(--cream);
+      margin-bottom: 2.5rem;
+    }
+    .mushroom-body {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.8;
+      color: rgba(250,247,242,0.78);
+      max-width: 580px;
+      margin: 0 auto 3rem;
+    }
+
+    /* ── FIND US ──────────────────────────────────── */
+    .find-us {
+      background: var(--parchment);
+      color: var(--soil);
+      padding: 7rem 2rem;
+    }
+    .find-us .section-label { color: var(--fern); }
+    .find-us-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(3rem, 8vw, 6rem);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--soil);
+      margin-bottom: 4rem;
+    }
+    .find-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 680px) { .find-grid { grid-template-columns: 1fr; } }
+
+    .find-card {
+      background: rgba(26,15,7,0.05);
+      border: 1px solid rgba(26,15,7,0.1);
+      border-radius: 8px;
+      padding: 2.5rem;
+    }
+    .find-card-label {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--fern);
+      margin-bottom: 0.9rem;
+    }
+    .find-card-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.9rem;
+      text-transform: uppercase;
+      color: var(--soil);
+      margin-bottom: 1rem;
+    }
+    .find-card p {
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: rgba(26,15,7,0.72);
+      margin-bottom: 1.75rem;
+    }
+
+    /* Gradient bridge parchment → cream */
+    .blend-bridge {
+      background: linear-gradient(to bottom, var(--parchment), var(--cream));
+      height: 5rem;
+    }
+
+    /* ── STORY ────────────────────────────────────── */
+    .story {
+      background: var(--cream);
+      color: var(--soil);
+      padding: 7rem 2rem;
+    }
+    .story .section-label { color: var(--fern); }
+    .story-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    @media (max-width: 800px) {
+      .story-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    .story-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--soil);
+      margin-bottom: 0;
+    }
+    .story-body p {
+      font-size: 1.05rem;
+      line-height: 1.82;
+      color: rgba(26,15,7,0.78);
+      margin-bottom: 1.5rem;
+    }
+    .story-values { margin-top: 3rem; }
+    .value-item {
+      padding: 1.4rem 0;
+      border-top: 1px solid rgba(26,15,7,0.1);
+    }
+    .value-item:last-child { border-bottom: 1px solid rgba(26,15,7,0.1); }
+    .value-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--soil);
+      margin-bottom: 0.35rem;
+    }
+    .value-desc {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: rgba(26,15,7,0.6);
+      font-style: italic;
+    }
+
+    /* ── CSA ──────────────────────────────────────── */
+    .csa {
+      background: var(--fern);
+      padding: 7rem 2rem;
+      text-align: center;
+    }
+    .csa-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--harvest);
+      margin-bottom: 1.5rem;
+    }
+    .csa-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.8rem, 8vw, 7rem);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--parchment);
+      margin-bottom: 1.5rem;
+    }
+    .csa-body {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.78;
+      color: rgba(237,230,216,0.78);
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+    }
+    .csa-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 460px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .csa-form input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.9rem 1.2rem;
+      border: 1.5px solid rgba(237,230,216,0.28);
+      border-radius: 3px;
+      background: rgba(255,255,255,0.09);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .csa-form input::placeholder { color: rgba(237,230,216,0.45); }
+    .csa-form input:focus { border-color: var(--harvest); }
+
+    /* ── CONTACT ──────────────────────────────────── */
+    .contact {
+      background: var(--soil);
+      padding: 8rem 2rem 7rem;
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    @media (max-width: 800px) {
+      .contact-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+    }
+    .contact .section-label { color: var(--harvest); }
+    .contact-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--cream);
+      margin-bottom: 3rem;
+    }
+    .contact-detail { margin-bottom: 2rem; }
+    .contact-detail-label {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--harvest);
+      margin-bottom: 0.35rem;
+    }
+    .contact-detail p {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: rgba(250,247,242,0.75);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.38rem;
+    }
+    .form-field label {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.45);
+    }
+    .form-field input,
+    .form-field textarea {
+      padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(250,247,242,0.14);
+      border-radius: 3px;
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus { border-color: var(--harvest); }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(250,247,242,0.28); }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      background: #0F0804;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(250,247,242,0.07);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+    .footer-brand span {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      font-weight: 400;
+      color: var(--harvest);
+      margin-top: 0.2rem;
+    }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(250,247,242,0.25);
+    }
+
+    /* ── REDUCED MOTION ───────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Garden Variety Farm</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#grow">What We Grow</a></li>
+    <li><a href="#find-us">Find Us</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#csa">CSA</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-content container">
+    <p class="hero-eyebrow">Oldham County, Kentucky</p>
+    <h1 class="hero-title">
+      Garden<br>
+      <span class="tomato-word">Variety</span><br>
+      Farm
+    </h1>
+    <p class="hero-body">
+      Real food, grown right here. We raise what we love eating — vegetables, eggs, and now mushrooms — and bring it straight to your table.
+    </p>
+    <div class="hero-actions">
+      <a href="#find-us" class="btn btn-tomato">Find Us at Market</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════ INTRO BRIDGE ══════════════ -->
+<section class="intro">
+  <div class="intro-inner">
+    <p class="intro-text reveal">
+      We're a small farm doing things the <strong>slow way</strong> — planting by hand, harvesting what the season gives us, and showing up every Saturday at market to talk about it. No mystery. Just food and the people who grew it.
+    </p>
+  </div>
+</section>
+
+<!-- SOIL → FERN wave -->
+<div class="wave" style="background:var(--soil); margin-top:5rem;">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" height="90">
+    <path d="M0,0 C360,90 1080,0 1440,65 L1440,90 L0,90 Z" fill="#3B5934"/>
+  </svg>
+</div>
+
+<!-- ══════════════ WHAT WE GROW ══════════════ -->
+<section class="grow" id="grow">
+  <div class="container">
+    <div class="grow-header">
+      <h2 class="grow-title reveal">What<br>We<br>Grow</h2>
+      <p class="grow-sub reveal reveal-d2">
+        Planted in Oldham County soil. Harvested by hand. Everything here is grown by us — no reselling, no mystery. Ask us anything at market.
+      </p>
+    </div>
+
+    <div class="produce-grid">
+      <div class="produce-item featured reveal">
+        <span class="produce-badge">Signature</span>
+        <div class="produce-name">Tomatoes</div>
+        <div class="produce-note">Multiple varieties, peak of summer. The whole reason we started.</div>
+      </div>
+      <div class="produce-item reveal reveal-d1">
+        <div class="produce-name">Carrots</div>
+        <div class="produce-note">Spring & fall harvests</div>
+      </div>
+      <div class="produce-item reveal reveal-d2">
+        <div class="produce-name">Beets</div>
+        <div class="produce-note">Red, golden & candy stripe</div>
+      </div>
+      <div class="produce-item new-item reveal reveal-d3">
+        <span class="produce-badge">New</span>
+        <div class="produce-name">Mushrooms</div>
+        <div class="produce-note">Just getting started — come ask us about it.</div>
+      </div>
+      <div class="produce-item reveal">
+        <div class="produce-name">Beans</div>
+        <div class="produce-note">Green, purple & pole</div>
+      </div>
+      <div class="produce-item reveal reveal-d1">
+        <div class="produce-name">Turnips</div>
+      </div>
+      <div class="produce-item reveal reveal-d2">
+        <div class="produce-name">Garlic</div>
+        <div class="produce-note">Hardneck varieties</div>
+      </div>
+      <div class="produce-item reveal reveal-d3">
+        <div class="produce-name">Peppers</div>
+        <div class="produce-note">Sweet & hot, several varieties</div>
+      </div>
+      <div class="produce-item reveal reveal-d1">
+        <div class="produce-name">Onions</div>
+      </div>
+      <div class="produce-item reveal reveal-d2">
+        <div class="produce-name">Potatoes</div>
+        <div class="produce-note">Several varieties</div>
+      </div>
+      <div class="produce-item reveal reveal-d3">
+        <div class="produce-name">Sweet Potatoes</div>
+      </div>
+      <div class="produce-item reveal">
+        <div class="produce-name">Herbs</div>
+        <div class="produce-note">Basil, thyme, cilantro & more</div>
+      </div>
+      <div class="produce-item reveal reveal-d1">
+        <div class="produce-name">Flowers</div>
+        <div class="produce-note">Cut bouquets at market</div>
+      </div>
+      <div class="produce-item reveal reveal-d2">
+        <div class="produce-name">Eggs</div>
+        <div class="produce-note">From our hens</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FERN → PLUM wave -->
+<div class="wave" style="background:var(--fern);">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" height="90">
+    <path d="M0,60 C480,0 960,90 1440,20 L1440,90 L0,90 Z" fill="#4A1F60"/>
+  </svg>
+</div>
+
+<!-- ══════════════ MUSHROOM SPOTLIGHT ══════════════ -->
+<section class="mushroom">
+  <p class="mushroom-eyebrow reveal">Something new this season</p>
+  <h2 class="mushroom-title reveal">We started<br>growing<br>mushrooms.</h2>
+  <p class="mushroom-body reveal reveal-d1">
+    We're learning as we go — that's the honest truth. This season we're experimenting with our first grows, and we couldn't be more excited about where it's headed. Come find us at market and tell us what you think.
+  </p>
+  <a href="#contact" class="btn btn-outline reveal reveal-d2">Follow Along</a>
+</section>
+
+<!-- PLUM → PARCHMENT wave -->
+<div class="wave" style="background:var(--plum);">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" height="90">
+    <path d="M0,20 C360,90 1080,0 1440,55 L1440,90 L0,90 Z" fill="#EDE6D8"/>
+  </svg>
+</div>
+
+<!-- ══════════════ FIND US ══════════════ -->
+<section class="find-us" id="find-us">
+  <div class="container">
+    <p class="section-label reveal">Where to find us</p>
+    <h2 class="find-us-title reveal">Come<br>find us.</h2>
+    <div class="find-grid">
+      <div class="find-card reveal">
+        <p class="find-card-label">Farmers Market</p>
+        <h3 class="find-card-title">Show Up Saturday</h3>
+        <p>We're at the Oldham County Farmers Market most Saturday mornings through the season. Look for us — we'll be the ones happy to talk about carrots longer than you expected.</p>
+        <a href="#contact" class="btn btn-dark">Ask About Our Schedule</a>
+      </div>
+      <div class="find-card reveal reveal-d2">
+        <p class="find-card-label">Direct from the Farm</p>
+        <h3 class="find-card-title">Buy Direct</h3>
+        <p>Want something specific, or enough to stock your kitchen for the week? Reach out and we'll work something out. We're also planning a CSA for next season — get on the list early.</p>
+        <a href="#csa" class="btn btn-dark">Join the CSA List</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Parchment → cream gradient bridge -->
+<div class="blend-bridge"></div>
+
+<!-- ══════════════ STORY ══════════════ -->
+<section class="story" id="story">
+  <div class="story-inner container">
+    <div>
+      <p class="section-label reveal">Who we are</p>
+      <h2 class="story-title reveal">Scrappy<br>by<br>choice.</h2>
+    </div>
+    <div>
+      <div class="story-body">
+        <p class="reveal">We're a small operation in Oldham County — not because we have to be, but because we believe the best farming happens at a scale where you can actually know your plants, your soil, and your customers.</p>
+        <p class="reveal reveal-d1">We'll tell you what's in season and why, what failed this year and what surprised us, and which variety of carrot you should be roasting right now. Knowing where your food comes from should be easy — we try to make it that way.</p>
+      </div>
+      <div class="story-values">
+        <div class="value-item reveal">
+          <div class="value-name">Relational</div>
+          <div class="value-desc">We show up at market every week so you know who you're buying from. That matters to us.</div>
+        </div>
+        <div class="value-item reveal reveal-d1">
+          <div class="value-name">Scrappy</div>
+          <div class="value-desc">We figure things out as we go, share what we learn, and don't pretend otherwise.</div>
+        </div>
+        <div class="value-item reveal reveal-d2">
+          <div class="value-name">Educational</div>
+          <div class="value-desc">Ask us anything. We love talking about growing, cooking, and the why behind all of it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREAM → FERN wave -->
+<div class="wave" style="background:var(--cream);">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" height="90">
+    <path d="M0,45 C600,90 900,0 1440,45 L1440,90 L0,90 Z" fill="#3B5934"/>
+  </svg>
+</div>
+
+<!-- ══════════════ CSA ══════════════ -->
+<section class="csa" id="csa">
+  <p class="csa-eyebrow reveal">Coming next season</p>
+  <h2 class="csa-title reveal">Garden box.<br>Your door.</h2>
+  <p class="csa-body reveal reveal-d1">
+    We're planning a CSA — a weekly box of whatever's best from the field, picked up locally. Drop your email and we'll reach out when spots open.
+  </p>
+  <form class="csa-form reveal reveal-d2" id="csaForm">
+    <input type="email" placeholder="your@email.com" required aria-label="Email address">
+    <button type="submit" class="btn btn-harvest">Count me in</button>
+  </form>
+</section>
+
+<!-- FERN → SOIL wave -->
+<div class="wave" style="background:var(--fern);">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" height="90">
+    <path d="M0,0 C480,90 960,0 1440,65 L1440,90 L0,90 Z" fill="#1A0F07"/>
+  </svg>
+</div>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section class="contact" id="contact">
+  <div class="contact-inner container">
+    <div>
+      <p class="section-label reveal">Say hello</p>
+      <h2 class="contact-title reveal">Let's<br>talk.</h2>
+      <div class="contact-detail reveal reveal-d1">
+        <div class="contact-detail-label">Location</div>
+        <p>Oldham County, Kentucky</p>
+      </div>
+      <div class="contact-detail reveal reveal-d2">
+        <div class="contact-detail-label">At Market</div>
+        <p>Oldham County Farmers Market<br>Most Saturdays, in season</p>
+      </div>
+      <div class="contact-detail reveal reveal-d3">
+        <div class="contact-detail-label">Social</div>
+        <p>@gardenvarietyfarm</p>
+      </div>
+    </div>
+
+    <form class="contact-form reveal reveal-d1" id="contactForm">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="c-name">Name</label>
+          <input type="text" id="c-name" placeholder="Your name" required>
+        </div>
+        <div class="form-field">
+          <label for="c-email">Email</label>
+          <input type="email" id="c-email" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="c-subject">What's on your mind?</label>
+        <input type="text" id="c-subject" placeholder="Market schedule, orders, just saying hi…">
+      </div>
+      <div class="form-field">
+        <label for="c-message">Message</label>
+        <textarea id="c-message" rows="5" placeholder="Tell us what you're after…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-harvest" style="align-self:flex-start">Send it →</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      Garden Variety Farm
+      <span>Oldham County, Kentucky</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#grow">Grow</a></li>
+      <li><a href="#find-us">Find Us</a></li>
+      <li><a href="#story">Story</a></li>
+      <li><a href="#csa">CSA</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 Garden Variety Farm</p>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Mobile menu
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => links.classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // CSA form
+  document.getElementById('csaForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const inp = e.target.querySelector('input');
+    btn.textContent = "You're on the list!";
+    btn.disabled = true;
+    inp.disabled = true;
+  });
+
+  // Contact form
+  document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Sent!';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Send it →'; btn.disabled = false; }, 3000);
+  });
+</script>
+
+</body>
+</html>
