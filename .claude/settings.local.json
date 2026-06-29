@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude skill *)",
+      "PowerShell(claude skill install https://github.com/anthropics/skills/tree/main/skills/frontend-design 2>&1)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "PowerShell(gh api repos/anthropics/skills/contents/skills/frontend-design 2>&1)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "PowerShell($content = Invoke-WebRequest -Uri \"https://raw.githubusercontent.com/anthropics/skills/main/skills/frontend-design/SKILL.md\" -UseBasicParsing; $content.Content)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}
