@@ -946,8 +946,9 @@
   <p class="csa-body reveal reveal-d1">
     We're planning a CSA: a weekly box of whatever's best from the field, picked up locally. Drop your email and we'll reach out when spots open.
   </p>
-  <form class="csa-form reveal reveal-d2" id="csaForm">
-    <input type="email" placeholder="your@email.com" required aria-label="Email address">
+  <form class="csa-form reveal reveal-d2" name="csa" method="POST" data-netlify="true">
+    <input type="hidden" name="form-name" value="csa">
+    <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
     <button type="submit" class="btn btn-harvest">Count me in</button>
   </form>
 </section>
@@ -979,24 +980,25 @@
       </div>
     </div>
 
-    <form class="contact-form reveal reveal-d1" id="contactForm">
+    <form class="contact-form reveal reveal-d1" name="contact" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="contact">
       <div class="form-row">
         <div class="form-field">
           <label for="c-name">Name</label>
-          <input type="text" id="c-name" placeholder="Your name" required>
+          <input type="text" id="c-name" name="name" placeholder="Your name" required>
         </div>
         <div class="form-field">
           <label for="c-email">Email</label>
-          <input type="email" id="c-email" placeholder="your@email.com" required>
+          <input type="email" id="c-email" name="email" placeholder="your@email.com" required>
         </div>
       </div>
       <div class="form-field">
         <label for="c-subject">What's on your mind?</label>
-        <input type="text" id="c-subject" placeholder="Market schedule, orders, just saying hi…">
+        <input type="text" id="c-subject" name="subject" placeholder="Market schedule, orders, just saying hi…">
       </div>
       <div class="form-field">
         <label for="c-message">Message</label>
-        <textarea id="c-message" rows="5" placeholder="Tell us what you're after…"></textarea>
+        <textarea id="c-message" name="message" rows="5" placeholder="Tell us what you're after…"></textarea>
       </div>
       <button type="submit" class="btn btn-harvest" style="align-self:flex-start">Send it →</button>
     </form>
@@ -1048,24 +1050,6 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => revealObserver.observe(el));
 
-  // CSA form
-  document.getElementById('csaForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const inp = e.target.querySelector('input');
-    btn.textContent = "You're on the list!";
-    btn.disabled = true;
-    inp.disabled = true;
-  });
-
-  // Contact form
-  document.getElementById('contactForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.textContent = 'Sent!';
-    btn.disabled = true;
-    setTimeout(() => { btn.textContent = 'Send it →'; btn.disabled = false; }, 3000);
-  });
 </script>
 
 </body>
